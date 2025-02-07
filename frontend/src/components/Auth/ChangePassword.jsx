@@ -1,40 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, Save } from 'lucide-react';
-import axios from 'axios';
-import backendUrl from '../../settings.js';
 
-const ChangePassword = () => {
+const ChangePassword = ({message, status, handleChangePassword}) => {
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const [status, setStatus] = useState('');
-  const navigate = useNavigate();
 
-  const handleChangePassword = async () => {
-    try {
-      if (newPassword !== confirmPassword) {
-        setMessage('Passwords do not match');
-        setStatus('error');
-        return;
-      }
-
-      const response = await axios.post(backendUrl + '/api/change-password', {
-        email,
-        newPassword
-      });
-
-      setMessage(response.data.message);
-      setStatus('success');
-      setTimeout(() => {
-        navigate('/');
-      }, 2000);
-    } catch (error) {
-      setMessage('Failed to change password. Please verify your information.');
-      setStatus('error');
-    }
-  };
+  const changePassword = () => handleChangePassword({newPassword, confirmPassword, email});
 
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
@@ -97,7 +69,7 @@ const ChangePassword = () => {
 
           <button
             type="button"
-            onClick={handleChangePassword}
+            onClick={changePassword}
             className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg font-medium hover:opacity-90 transition-opacity"
           >
             <Save className="h-5 w-5" />

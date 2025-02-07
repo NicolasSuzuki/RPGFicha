@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Shield, Sword, Brain, Heart, Target, Zap, Activity, Users, Star, CircleDot } from 'lucide-react';
-import axios from 'axios';
-import backendUrl from '../../settings.js';
 
 const InputField = ({ label, value, onChange, icon: Icon }) => (
   <div className="relative">
@@ -38,7 +36,22 @@ const TextInputField = ({ label, value, onChange, icon: Icon }) => (
   </div>
 );
 
-const RegisterCharacter = () => {
+const showToast = (title, message, type) => {
+  const toast = document.createElement('div');
+  toast.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg ${type === 'success' ? 'bg-green-500' : 'bg-red-500'
+    } text-white max-w-sm animate-fade-in`;
+  toast.innerHTML = `
+    <h4 class="font-bold">${title}</h4>
+    <p>${message}</p>
+  `;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('animate-fade-out');
+    setTimeout(() => document.body.removeChild(toast), 300);
+  }, 3000);
+};
+
+const RegisterCharacter = ({ handleRegisterCharacter }) => {
   const navigate = useNavigate();
   const [characterName, setCharacterName] = useState('');
   const [level, setLevel] = useState(1);
@@ -57,7 +70,7 @@ const RegisterCharacter = () => {
   const [charisma, setCharisma] = useState(0);
   const [talent, setTalent] = useState('');
   const [skillPoints, setSkillPoints] = useState(0);
-  
+
   const talents = [
     ['agility', 'Pulo do Gato'],
     ['strength', 'Artista Marcial'],
@@ -65,64 +78,37 @@ const RegisterCharacter = () => {
     ['accuracy', 'Saque Rápido']
   ];
 
-  const handleRegisterCharacter = async () => {
-    try {
-      const userId = null; // Replace with the actual user ID
-      await axios.post(backendUrl + '/api/register-character', {
-        userId,
-        characterName,
-        level,
-        position,
-        quirk,
-        hp,
-        defenseDa,
-        defenseRes,
-        defenseCm,
-        strength,
-        accuracy,
-        agility,
-        vigor,
-        intelligence,
-        wisdom,
-        charisma,
-        talent,
-        skillPoints,
-      });
-
-      // Show success toast
-      showToast('Success', 'Character registered successfully!', 'success');
-      return true;
-    } catch (error) {
-      showToast('Error', 'An error occurred during registration.', 'error');
-      return false;
-    }
-  };
-
-  const showToast = (title, message, type) => {
-    const toast = document.createElement('div');
-    toast.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg ${
-      type === 'success' ? 'bg-green-500' : 'bg-red-500'
-    } text-white max-w-sm animate-fade-in`;
-    toast.innerHTML = `
-      <h4 class="font-bold">${title}</h4>
-      <p>${message}</p>
-    `;
-    document.body.appendChild(toast);
-    setTimeout(() => {
-      toast.classList.add('animate-fade-out');
-      setTimeout(() => document.body.removeChild(toast), 300);
-    }, 3000);
-  };
+  const onRegisterCharacter = async () => handleRegisterCharacter({ 
+    character: { 
+      characterName, 
+      level, 
+      position, 
+      quirk, 
+      hp, 
+      defenseDa, 
+      defenseRes, 
+      defenseCm, 
+      strength, 
+      accuracy, 
+      agility, 
+      vigor, 
+      intelligence, 
+      wisdom, 
+      charisma, 
+      talent, 
+      skillPoints
+    },
+    showToast });
 
   const handleRegisterGoBack = () => {
-    handleRegisterCharacter().then((resp) => {
+    onRegisterCharacter().then((resp) => {
       if (resp) navigate(-1);
     });
   };
 
   const handleRegisterClean = () => {
-    handleRegisterCharacter().then((resp) => {
-      if(resp) {
+    onRegisterCharacter().then((resp) => {
+      if (resp) {
         setCharacterName('');
         setLevel(1);
         setPosition('');
@@ -161,7 +147,7 @@ const RegisterCharacter = () => {
                 onChange={(e) => setCharacterName(e.target.value)}
                 icon={Users}
               />
-              
+
               <InputField
                 label="Level"
                 value={level}

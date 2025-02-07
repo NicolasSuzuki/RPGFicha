@@ -1,23 +1,12 @@
 import React, { useState } from 'react';
 import { Mail, Send } from 'lucide-react';
 import axios from 'axios';
-import backendUrl from '../../settings.js';
+import backendUrl from '../../settings';
 
-const PasswordRecovery = () => {
+const PasswordRecovery = ({ message, status, handlePasswordRecovery }) => {
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [status, setStatus] = useState('');
 
-  const handlePasswordRecovery = async () => {
-    try {
-      const response = await axios.post(backendUrl + '/recovery', { email });
-      setMessage(response.data.message);
-      setStatus('success');
-    } catch (error) {
-      setMessage('Failed to send password recovery request. Please try again.');
-      setStatus('error');
-    }
-  };
+  const onPasswordRecovery = () => handlePasswordRecovery({ email });
 
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
@@ -46,7 +35,7 @@ const PasswordRecovery = () => {
 
           <button
             type="button"
-            onClick={handlePasswordRecovery}
+            onClick={onPasswordRecovery}
             className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg font-medium hover:opacity-90 transition-opacity"
           >
             <Send className="h-5 w-5" />

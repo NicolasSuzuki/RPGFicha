@@ -1,25 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import CharacterDetails from './CharacterDetails';
 import { User } from 'lucide-react';
-import backendUrl from '../../settings.js';
 
-const CharacterList = ({ userID }) => {
-  const [characters, setCharacters] = useState(null);
-
-  useEffect(() => {
-    const fetchCharacter = async () => {
-      try {
-        const response = await axios.get(backendUrl + '/api/all-characters/');
-        console.log({response});
-        setCharacters(response.data);
-      } catch (error) {
-        console.error('Error fetching character:', error);
-      }
-    };
-
-    fetchCharacter();
-  }, [userID]);
+const CharacterList = ({ characters, userID }) => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">

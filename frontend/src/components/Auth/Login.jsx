@@ -1,30 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, LogIn, Key } from 'lucide-react';
-import axios from 'axios';
-import backendUrl from '../../settings.js';
 
-const Login = () => {
+const Login = ({ handleLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  console.log('email, password')
-  const handleLogin = async () => {
-    try {
-      const response = await axios.post(backendUrl + '/api/login', {
-        email,
-        password,
-      });
-
-      const token = response.data.token;
-      localStorage.setItem('token', token);
-      navigate('/dashboard');
-    } catch (error) {
-      console.error('Login failed:', error);
-    }
-  };
-
+  const onLogin = () => handleLogin({ email, password });
   const handleRedirectToChangePassword = () => {
     navigate('/change-password');
   };
@@ -75,7 +58,7 @@ const Login = () => {
           <div className="space-y-4">
             <button
               type="button"
-              onClick={handleLogin}
+              onClick={onLogin}
               className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg font-medium hover:opacity-90 transition-opacity"
             >
               <LogIn className="h-5 w-5" />
