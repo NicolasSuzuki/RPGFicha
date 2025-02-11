@@ -7,7 +7,6 @@ const db = require('../../db');
 // GET /api/get-character/:userID
 router.get('/:userID', async (req, res) => {
     const userID = req.params.userID;
-    console.log(userID)
     try {
         // Get the user's character from the database
         const character = await db.getCharacterByUserID(userID);

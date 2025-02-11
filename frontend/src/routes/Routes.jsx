@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { LogOut, PlusCircle, List, Shield } from 'lucide-react';
+import { LogOut, PlusCircle, List, Shield, Edit } from 'lucide-react';
 import Login from 'containers/Auth/Login';
 import CharacterList from 'containers/Character/CharacterList';
 import ChangePassword from 'containers/Auth/ChangePassword';
 import RegisterCharacter from 'containers/Character/RegisterCharacter';
+import EditCharacter from 'containers/Character/CharacterEdit';
 import backendUrl from 'settings';
 
 const RoutesCmp = () => {
@@ -26,7 +27,7 @@ const RoutesCmp = () => {
       }
     };
     verifyToken();
-  }, []);
+  }, [localStorage.getItem('token')]);
 
   if (!isAuthenticated) {
     return (
@@ -83,6 +84,7 @@ const RoutesCmp = () => {
               <Route path="/dashboard" element={<CharacterList />} />
               <Route path="/change-password" element={<ChangePassword />} />
               <Route path="/register-character" element={<RegisterCharacter />} />
+              <Route path="/edit-character/:id" element={<EditCharacter />} />
             </Routes>
           </div>
         </div>

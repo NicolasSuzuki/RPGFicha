@@ -19,7 +19,7 @@ async function populateDatabase() {
         // Criando usuário mestre
         const hashedPassword = await bcrypt.hash('securepass', 10);
         const [userResult] = await connection.execute(
-            'INSERT INTO user (username, email, password_hash) VALUES (?, ?, ?)',
+            'INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)',
             ['Fioravante', 'mathfg6@gmail.com', hashedPassword]
         );
         const userId = userResult.insertId;
