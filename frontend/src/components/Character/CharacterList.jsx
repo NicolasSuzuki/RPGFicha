@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import CharacterDetails from './CharacterDetails';
 import { User } from 'lucide-react';
 
+
+  function handleClick() {
+    window.location.href = "/register-character";
+  }
+
 const CharacterList = ({ characters, userID }) => {
+
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
@@ -20,9 +26,9 @@ const CharacterList = ({ characters, userID }) => {
               <p className="text-gray-400">Loading character data...</p>
             </div>
           )}
-          
-          <div className="bg-gray-800/50 rounded-xl p-6 border-2 border-dashed border-gray-700 flex flex-col items-center justify-center text-gray-400 cursor-pointer hover:bg-gray-800/70 transition-colors">
-            <User className="w-8 h-8 mb-2" />
+                    
+          <div onClick={handleClick} className="bg-gray-800/50 rounded-xl p-6 border-2 border-dashed border-gray-700 flex flex-col items-center justify-center text-gray-400 cursor-pointer hover:bg-gray-800/70 transition-colors">
+           <User className="w-8 h-8 mb-2" />
             <p className="font-medium">Create New Character</p>
           </div>
         </div>

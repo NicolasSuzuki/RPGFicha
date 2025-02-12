@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import backendUrl from 'settings';
+import RegisterCharacterCMP from 'components/Character/RegisterCharacter.jsx';
 
 const RegisterCharacter = () => {
 
