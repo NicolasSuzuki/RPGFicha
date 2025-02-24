@@ -45,6 +45,10 @@ const CharacterEdit = ({ handleUpdateCharacter, message, status, character }) =>
   ];
   console.log(character)
 
+  function handleClick() {
+    window.location.href = "/dashboard";
+  }
+
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
       <div className="max-w-4xl mx-auto">
@@ -54,7 +58,8 @@ const CharacterEdit = ({ handleUpdateCharacter, message, status, character }) =>
             <p className="text-gray-400">Update your character's attributes and details</p>
           </div>
           <button
-            onClick={() => history.goBack()}
+            //onClick={() => history.goBack()}
+            onClick = {handleClick}
             className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -193,6 +198,10 @@ const CharacterEdit = ({ handleUpdateCharacter, message, status, character }) =>
                 </label>
               ))}
             </div>
+          </div>
+
+          <div>
+            
           </div>
 
           <div className="pt-4">

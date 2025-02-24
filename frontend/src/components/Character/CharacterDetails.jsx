@@ -23,6 +23,10 @@ const CharacterDetails = ({ character }) => {
     return <div className="text-center py-8 text-gray-400">Loading...</div>;
   }
 
+  function handleClick() {
+    window.location.href = '/edit-character/' + character.id;
+  }
+
   return (
     <div className="bg-gray-800 rounded-xl p-6 space-y-6">
       <div className="flex items-center gap-4">
@@ -102,7 +106,7 @@ const CharacterDetails = ({ character }) => {
         )}
       </div>
       
-      <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
+      <button onClick={handleClick} className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
         Edit Character
       </button>
     </div>

@@ -4,12 +4,12 @@ const express = require('express');
 const router = express.Router();
 const db = require('../../db');
 
-// GET /api/get-character/:userID
-router.get('/:userID', async (req, res) => {
-    const userID = req.params.userID;
+// GET /api/get-character/:id
+router.get('/:id', async (req, res) => {
+    const id = req.params.id;
     try {
         // Get the user's character from the database
-        const character = await db.getCharacterByUserID(userID);
+        const character = await db.getCharacterByID(id);
 
         if (!character) {
             return res.status(404).json({ error: 'Character not found for this user' });

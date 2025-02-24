@@ -76,6 +76,15 @@ const getCharacterByUserID = async (user_id) => {
     return result.length > 0 ? result[0] : null;
 };
 
+const getCharacterByID = async (id) => {
+    console.log(id)
+    const query = 'SELECT * FROM usercharacter WHERE id = ?';
+    const params = [id];
+    const result = await executeQuery(query, params);
+
+    return result.length > 0 ? result[0] : null;
+};
+
 module.exports = {
     executeQuery,
     findUserByUsername,
@@ -88,4 +97,5 @@ module.exports = {
     getCharacterByUserID,
     findUserByEmail,
     findCharacterByName,
+    getCharacterByID,
 };
