@@ -36,12 +36,23 @@ CREATE TABLE UserCharacter (
     FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
--- Criando tabela de perícias (skills)
-CREATE TABLE CharacterSkills (
+-- Criando tabela de perícias
+CREATE TABLE CharacterProficiency (
     id INT AUTO_INCREMENT PRIMARY KEY,
     character_id INT NOT NULL,
     name VARCHAR(50) NOT NULL,
     value INT NOT NULL,
+    FOREIGN KEY (character_id) REFERENCES UserCharacter(id) ON DELETE CASCADE
+);
+-- Criando tabela de skills
+CREATE TABLE CharacterSkills (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    character_id INT NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    description VARCHAR(500) NULL,
+    damage VARCHAR(200) NULL,
+    skill_range VARCHAR(200) NULL,
+    skill_rank INT NOT NULL,
     FOREIGN KEY (character_id) REFERENCES UserCharacter(id) ON DELETE CASCADE
 );
 ```
