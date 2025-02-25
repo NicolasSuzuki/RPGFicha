@@ -7,15 +7,20 @@ import { User } from 'lucide-react';
     window.location.href = "/register-character";
   }
 
-const CharacterList = ({ characters, userID }) => {
-
-
+const CharacterList = ({ characters, handleLevelUp }) => {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Character Management</h1>
-          <p className="text-gray-400">Manage your RPG characters and their attributes</p>
+        <div className='flex flex-row justify-between'>
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold mb-2">Character Management</h1>
+            <p className="text-gray-400">Manage your RPG characters and their attributes</p>
+          </div>
+          <div className="mb-8">
+            <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md" onClick={handleLevelUp}>
+              Level Up All
+            </button>
+          </div>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">

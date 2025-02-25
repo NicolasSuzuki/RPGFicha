@@ -43,7 +43,6 @@ const CharacterEdit = ({ handleUpdateCharacter, message, status, character }) =>
     ['wisdom', 'Contra Ataque'],
     ['accuracy', 'Saque Rápido']
   ];
-  console.log(character)
 
   function handleClick() {
     window.location.href = "/dashboard";

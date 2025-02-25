@@ -10,7 +10,6 @@ const CharacterList = ({ userID }) => {
     const fetchCharacter = async () => {
       try {
         const response = await axios.get(backendUrl + '/api/all-characters/');
-        console.log({response});
         setCharacters(response.data);
       } catch (error) {
         console.error('Error fetching character:', error);
@@ -20,7 +19,18 @@ const CharacterList = ({ userID }) => {
     fetchCharacter();
   }, [userID]);
 
-  return <CharacterListCMP characters={characters} userID={userID} />;
+  const handleLevelUp = async () => {
+    try {
+      await axios.post(backendUrl + '/api/level-up/');
+      // Refresh the character list after level up
+      const response = await axios.get(backendUrl + '/api/all-characters/');
+      setCharacters(response.data);
+    } catch (error) {
+      console.error('Error level up character:', error);
+    }
+  };
+
+  return <CharacterListCMP characters={characters} handleLevelUp={handleLevelUp} />;
 };
 
 export default CharacterList;

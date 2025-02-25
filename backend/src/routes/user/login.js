@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
         }
 
         // Return the token
-        const token = jwt.sign({ userId: user[0].user_id }, 'your-secret-key', { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user[0].id }, 'your-secret-key', { expiresIn: '1h' });
         res.json({ token, message: 'Login successful' });
     } catch (error) {
         console.error(error);

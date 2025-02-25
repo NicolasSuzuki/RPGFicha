@@ -11,6 +11,7 @@ import backendUrl from 'settings';
 
 const RoutesCmp = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     axios.defaults.headers.common['ngrok-skip-browser-warning'] = 'true';
@@ -21,6 +22,8 @@ const RoutesCmp = () => {
         try {
           const response = await axios.post(backendUrl + '/api/verify-token', { token });
           setIsAuthenticated(response.data.valid);
+          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+          setUser(response.data.decoded);
         } catch (error) {
           setIsAuthenticated(false);
         }
@@ -37,7 +40,7 @@ const RoutesCmp = () => {
             <Routes>
               <Route path="/" exact element={<Login />} />
               <Route path="/change-password" element={<ChangePassword />} />
-              <Route path="/register-character" element={<RegisterCharacter />} />
+              <Route path="*" element={<Login />} />
             </Routes>
           </div>
         </div>
@@ -69,6 +72,8 @@ const RoutesCmp = () => {
                 onClick={() => {
                   localStorage.removeItem('token');
                   setIsAuthenticated(false);
+                  window.location.href = '/';
+                  window.location.reload();
                 }}
               >
                 <LogOut className="w-5 h-5" />
@@ -80,11 +85,11 @@ const RoutesCmp = () => {
           {/* PÁGINAS */}
           <div className="p-8 max-w-7xl mx-auto">
             <Routes>
-              <Route path="/" element={<CharacterList />} />
               <Route path="/dashboard" element={<CharacterList />} />
               <Route path="/change-password" element={<ChangePassword />} />
               <Route path="/register-character" element={<RegisterCharacter />} />
               <Route path="/edit-character/:id" element={<EditCharacter />} />
+              <Route path="*" element={<CharacterList />} />
             </Routes>
           </div>
         </div>

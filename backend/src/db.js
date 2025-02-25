@@ -55,8 +55,8 @@ const getAllPlayers = async () => {
     return executeQuery(query, []);
 };
 
-const updatePlayerLevelAndSkillPoints = async (user_id, characterID, newLevel, newSkillPoints) => {
-    const query = 'UPDATE usercharacter SET level = ?, skillPoints = ? WHERE user_id = ? AND characterID = ?';
+const updatePlayerLevelAndSkillPoints = async ({user_id, characterID, newLevel, newSkillPoints}) => {
+    const query = 'UPDATE usercharacter SET level = ?, skillPoints = ? WHERE user_id = ? AND id = ?';
     const params = [newLevel, newSkillPoints, user_id, characterID];
     return executeQuery(query, params);
 };
@@ -68,7 +68,6 @@ const updateCharacterHP = async (user_id, characterID, newHP) => {
 };
 
 const getCharacterByUserID = async (user_id) => {
-    console.log(user_id)
     const query = 'SELECT * FROM usercharacter WHERE user_id = ?';
     const params = [user_id];
     const result = await executeQuery(query, params);
@@ -77,7 +76,6 @@ const getCharacterByUserID = async (user_id) => {
 };
 
 const getCharacterByID = async (id) => {
-    console.log(id)
     const query = 'SELECT * FROM usercharacter WHERE id = ?';
     const params = [id];
     const result = await executeQuery(query, params);

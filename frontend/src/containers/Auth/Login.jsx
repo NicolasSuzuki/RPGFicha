@@ -17,6 +17,7 @@ const Login = () => {
       const token = response.data.token;
       localStorage.setItem('token', token);
       navigate('/dashboard');
+      window.location.reload();
     } catch (error) {
       console.error('Login failed:', error);
     }

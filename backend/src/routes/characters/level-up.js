@@ -12,13 +12,13 @@ router.post('/', async (req, res) => {
 
         // Level up each player and grant 8 skill points
         const levelUpPromises = allPlayers.map(async (player) => {
-            const { userID, characterID, level, skillPoints } = player;
+            const { user_id, id: characterID, level, skillPoints } = player;
 
             // Update the level and skill points for each player
             const newLevel = level + 1;
             const newSkillPoints = skillPoints + 8;
 
-            await db.updatePlayerLevelAndSkillPoints(userID, characterID, newLevel, newSkillPoints); // Implement this method in db.js
+            await db.updatePlayerLevelAndSkillPoints({user_id, characterID, newLevel, newSkillPoints}); // Implement this method in db.js
         });
 
         // Wait for all level-up operations to complete
