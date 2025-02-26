@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Shield, Sword, Brain, Heart, Target, Zap, Activity, Users, Star, CircleDot, Save, ArrowLeft } from 'lucide-react';
 
 const AttributeInput = ({ icon: Icon, label, value, onChange, min = 0 }) => (
@@ -36,6 +36,14 @@ const TextInput = ({ icon: Icon, label, value, onChange }) => (
   </div>
 );
 
+const Select = () => {
+
+
+ 
+  }
+
+
+
 const CharacterEdit = ({ handleUpdateCharacter, message, status, character }) => {
   const talents = [
     ['agility', 'Pulo do Gato'],
@@ -44,10 +52,27 @@ const CharacterEdit = ({ handleUpdateCharacter, message, status, character }) =>
     ['accuracy', 'Saque Rápido']
   ];
   console.log(character)
+  
+  const [optionSelec, setOptionSelec] = useState(undefined);
 
+  const options = [
+  "Nicolas",
+  "Suzuki",
+  "Garufi",
+  "Rocha",
+  "Matheus",
+  "Murilo",
+  "isso eh temporario ok ^^",
+];
   function handleClick() {
     window.location.href = "/dashboard";
   }
+  const onOptionChangeHandler = (event) => {
+    setOptionSelec(event.target.value);
+    console.log(
+      "User Selected Value - ",
+      event.target.value);
+    }
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
@@ -199,10 +224,23 @@ const CharacterEdit = ({ handleUpdateCharacter, message, status, character }) =>
               ))}
             </div>
           </div>
-
-          <div>
+          
             
-          </div>
+      
+      <div>
+      <h3>User</h3>
+      <select onChange={onOptionChangeHandler}>
+        <option>Atribua a um usuário</option>
+        {options.map((option, key) => {
+          return (
+            <option key={key}>
+              {option}
+            </option>
+        )})};
+      </select>
+        </div>
+                              
+
 
           <div className="pt-4">
             <button
