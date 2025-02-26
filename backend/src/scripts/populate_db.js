@@ -19,8 +19,13 @@ async function populateDatabase() {
         // Criando usuário mestre
         const hashedPassword = await bcrypt.hash('securepass', 10);
         const [userResult] = await connection.execute(
-            'INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)',
-            ['Fioravante', 'mathfg6@gmail.com', hashedPassword]
+            'INSERT INTO users (username, email, password_hash, is_master) VALUES (?, ?, ?)',
+            ['Fioravante', 'mathfg6@gmail.com', hashedPassword, 1],
+            ['Nicolas Suzuki', 'nicolas.suzuki@gmail.com', hashedPassword, 0],
+            ['Lucas Suzuki', 'lucas.suzuki2104@gmail.com', hashedPassword, 0],
+            ['Jonathan', 'jonathansouza.sjc@hotmail.com', hashedPassword, 0],
+            ['Rocha', 'lucasr.amaral@hotmail.com', hashedPassword, 0],
+            ['Garufi', 'lucas.garufi@gmail.com', hashedPassword, 0],
         );
         const userId = userResult.insertId;
         console.log('✅ Usuário "Fioravante" criado.');
@@ -36,16 +41,16 @@ async function populateDatabase() {
         console.log('✅ Personagem "Natalie Putit" criada.');
 
         // Criando perícias para "Natalie Putit"
-        const skills = [
+        const proficiency = [
             ['Atletismo', 4], ['Furtividade', 5], ['Prestidigitação', 4], ['Acrobacia', 6],
             ['Investigação', 4], ['Individualidade', 6], ['Conhecimentos Gerais', 4], ['Intuição', 3],
             ['Medicina', 3], ['Percepção', 3], ['Atuação', 1], ['Enganação', 1],
             ['Intimidação', 1], ['Persuasão', 1]
         ];
 
-        for (const [name, value] of skills) {
+        for (const [name, value] of proficiency) {
             await connection.execute(
-                'INSERT INTO CharacterSkills (character_id, name, value) VALUES (?, ?, ?)',
+                'INSERT INTO CharacterProficiency (character_id, name, value) VALUES (?, ?, ?)',
                 [characterId, name, value]
             );
         }

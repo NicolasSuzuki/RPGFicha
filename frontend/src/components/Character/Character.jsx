@@ -1,25 +1,4 @@
-import React from 'react';
-import {
-  Sword, Shield, Brain, Zap, User, Heart, Target,
-  Dumbbell, Activity, Lightbulb, BookOpen, Users,
-  Star, Award, CircleDot
-} from 'lucide-react';
-
-const AttributeCard = ({ icon: Icon, label, value }) => {
-  const modifiedValue = value && Math.floor(value / 5) - 1;
-  return (
-    <div className="flex items-center gap-2 bg-white/10 rounded-lg p-3">
-      <Icon className="w-5 h-5 text-blue-400" />
-      <div>
-        <p className="text-sm text-gray-400">{label}</p>
-        <p className="font-semibold">{value} {typeof value === 'number' && modifiedValue > 0 && `(${modifiedValue})`}</p>
-      </div>
-    </div>
-  );
-};
-
-
-const CharacterDetails = ({ character }) => {
+const CharacterDetailsBackup = ({ character }) => {
   if (!character) {
     return <div className="text-center py-8 text-gray-400">Loading...</div>;
   }
@@ -38,22 +17,24 @@ const CharacterDetails = ({ character }) => {
           <h3 className="text-xl font-bold text-white">{character.name}</h3>
           <p className="text-gray-400">{character.quirk} • Level {character.level}</p>
         </div>
-        <div className="w-[80px] bg-red-500/20 rounded-lg p-3 ml-auto">
-          <div className="flex items-center gap-2 m-auto w-min">
-            <Heart className="w-5 h-5 text-red-400" />
-            <p className="text-xl font-bold">{character.hp}</p>
-          </div>
-        </div>
-        <div onClick={() => console.log({ character })} className="w-[80px] bg-purple-500/20 rounded-lg p-3">
-          <div className="flex items-center gap-2 m-auto w-min">
-            <Star className="w-5 h-5 text-purple-400" />
-            <p className="text-xl font-bold">{character.skillPoints}</p>
-          </div>
-        </div>
       </div>
 
       <div className="space-y-4">
         <div className="flex gap-3">
+          <div className="flex-1 bg-gradient-to-r from-red-500/20 to-red-500/10 rounded-lg p-3">
+            <div className="flex items-center gap-2 mb-2">
+              <Heart className="w-5 h-5 text-red-400" />
+              <span className="text-red-400 font-semibold">HP</span>
+            </div>
+            <p className="text-2xl font-bold">{character.hp}</p>
+          </div>
+          <div className="flex-1 bg-gradient-to-r from-purple-500/20 to-purple-500/10 rounded-lg p-3">
+            <div className="flex items-center gap-2 mb-2">
+              <Star className="w-5 h-5 text-purple-400" />
+              <span className="text-purple-400 font-semibold">Skill Points</span>
+            </div>
+            <p className="text-2xl font-bold">{character.skillPoints}</p>
+          </div>
         </div>
 
         <div className="bg-white/5 rounded-lg p-4">
@@ -66,18 +47,43 @@ const CharacterDetails = ({ character }) => {
         </div>
 
         <div className="bg-white/5 rounded-lg p-4">
-          <h4 className="text-sm font-medium text-gray-400 mb-3">Mental Attributes</h4>
+          <h4 className="text-sm font-medium text-gray-400 mb-3">Primary Attributes</h4>
           <div className="grid grid-cols-2 gap-3">
             <AttributeCard icon={Sword} label="Strength" value={character.strength} />
             <AttributeCard icon={Target} label="Accuracy" value={character.accuracy} />
             <AttributeCard icon={Zap} label="Agility" value={character.agility} />
             <AttributeCard icon={Activity} label="Vigor" value={character.vigor} />
+          </div>
+        </div>
+
+        <div className="bg-white/5 rounded-lg p-4">
+          <h4 className="text-sm font-medium text-gray-400 mb-3">Mental Attributes</h4>
+          <div className="grid grid-cols-2 gap-3">
             <AttributeCard icon={Brain} label="Intelligence" value={character.intelligence} />
             <AttributeCard icon={BookOpen} label="Wisdom" value={character.wisdom} />
             <AttributeCard icon={Users} label="Charisma" value={character.charisma} />
+          </div>
+        </div>
+
+        <div className="bg-white/5 rounded-lg p-4">
+          <h4 className="text-sm font-medium text-gray-400 mb-3">Special</h4>
+          <div className="grid grid-cols-2 gap-3">
+            <AttributeCard icon={CircleDot} label="Quirk" value={character.quirk} />
             <AttributeCard icon={Award} label="Talent" value={character.talent} />
           </div>
         </div>
+
+        {character.skills && Object.keys(character.skills).length > 0 && (
+          <div className="bg-white/5 rounded-lg p-4">
+            <h4 className="text-sm font-medium text-gray-400 mb-3">Skills</h4>
+            <div className="grid grid-cols-2 gap-3">
+              <AttributeCard key={'base'} icon={Lightbulb} label={'Base'} value={5} />
+              {/*Object.entries(character.skills).map(([skill, value]) => (
+                <AttributeCard key={skill} icon={Lightbulb} label={skill} value={value} />
+              ))*/}
+            </div>
+          </div>
+        )}
       </div>
 
       <button onClick={handleClick} className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
@@ -86,5 +92,3 @@ const CharacterDetails = ({ character }) => {
     </div>
   );
 };
-
-export default CharacterDetails;

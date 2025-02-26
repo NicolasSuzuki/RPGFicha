@@ -3,10 +3,14 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../../db');
+const { verifyToken } = require('../../services/token');
 
 // GET /api/get-character/:userID
 router.get('/', async (req, res) => {
-
+    const resp = await verifyToken({ token: req.get('Authorization').split(' ')[1] });
+    if (!resp.valid || !resp.user.is_master) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
     try {
         // Get all characters from the database
         const characters = await db.getAllCharacters();
@@ -20,7 +24,6 @@ router.get('/', async (req, res) => {
                 CARISMA: `${character.charisma}/${calculateModifier(character.charisma)}`,
             }
         }));
-        console.log(charactersWithSkills)
         res.json(charactersWithSkills);
     } catch (error) {
         console.error(error);
